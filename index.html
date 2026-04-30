@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kvadrug Typer</title>
+    <style>
+        .char { display: inline-block; margin: 20px 10px; text-align: center; vertical-align: top; }
+        .sq { width: 22px; height: 22px; background: black; position: relative; margin: 0 auto 5px auto; }
+        .dot { width: 5px; height: 5px; background: black; border-radius: 50%; position: absolute; }
+
+        .tl { top: -9px; left: 0; }
+        .tm { top: -9px; left: 9px; }
+        .tr { top: -9px; right: 0; }
+        .bl { bottom: -9px; left: 0; }
+        .bm { bottom: -9px; left: 9px; }
+        .br { bottom: -9px; right: 0; }
+        .lt { left: -9px; top: 0; }
+        .lm { left: -9px; top: 9px; }
+        .lb { left: -9px; bottom: 0; }
+        .rt { right: -9px; top: 0; }
+        .rm { right: -9px; top: 9px; }
+        .rb { right: -9px; bottom: 0; }
+
+        .space { width: 30px; display: inline-block; }
+    </style>
+</head>
+<body>
+
+    <h1>Kvadrug xtroverg typer</h1>
+    
+    <input type="text" id="userInput" oninput="renderCipher()" placeholder="Type letters here...">
+    
+    <div id="outputArea" style="margin-top: 30px; min-height: 100px;"></div>
+
+    <script>
+        const cipherMap = {
+            'A': ['bl', 'br'],
+            'B': ['tl'],
+            'C': ['rt', 'rb'],
+            'D': ['lt', 'lb', 'rm'],
+            'E': ['rt', 'rm', 'rb'],
+            'F': ['rt', 'rm'],
+            'G': ['br'],
+            'H': ['tl', 'tr', 'bl', 'br'],
+            'I': ['tm'],
+            'J': ['lb', 'tr'],
+            'K': ['tl', 'bl', 'rt', 'rb'],
+            'L': ['tl', 'rb'],
+            'M': ['bl', 'bm', 'br'],
+            'N': ['bl', 'tr'],
+            'O': [],
+            'P': ['bl'],
+            'Q': ['bm'],
+            'R': ['bl', 'br', 'rt'],
+            'S': ['lb', 'rt'],
+            'T': ['lt', 'rt'],
+            'U': ['tl', 'tr'],
+            'V': ['tl', 'tr', 'bm'],
+            'W': ['tl', 'tm', 'tr'],
+            'X': ['lt', 'lb', 'rt', 'rb'],
+            'Y': ['tl', 'tr', 'br'],
+            'Z': ['lt', 'rb']
+        };
+
+        function renderCipher() {
+            const input = document.getElementById('userInput');
+            const output = document.getElementById('outputArea');
+            const text = input.value.toUpperCase();
+            
+            output.innerHTML = '';
+
+            for (let char of text) {
+                if (cipherMap[char]) {
+                    let container = document.createElement('div');
+                    container.className = 'char';
+
+                    let square = document.createElement('div');
+                    square.className = 'sq';
+
+                    cipherMap[char].forEach(pos => {
+                        let dot = document.createElement('div');
+                        dot.className = 'dot ' + pos;
+                        square.appendChild(dot);
+                    });
+
+                    container.appendChild(square);
+                    
+                    let label = document.createElement('div');
+                    label.textContent = char;
+                    container.appendChild(label);
+
+                    output.appendChild(container);
+                } else if (char === ' ') {
+                    let space = document.createElement('div');
+                    space.className = 'space';
+                    output.appendChild(space);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
